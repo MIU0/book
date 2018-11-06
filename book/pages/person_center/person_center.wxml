@@ -1,0 +1,84 @@
+<view class='person_all'>
+  <view class='person_top'>
+    <view class='person_top_back'>
+      <image src='http://wmdx.vimi66.com:8010/img-video/upload/img//20181105162846256712.png'></image>
+    </view>
+    <view class='person_top_con'>
+      <view class='person_top_con_img'>
+        <image src='../../images/avatar.png'></image>
+      </view>
+      <view class='person_top_con_name'>小猪佩奇</view>
+    </view>
+  </view>
+  <view class='person_info'>
+    <view class='my_balance'>
+      <view class="balance balance_num">0.00</view>
+      <view class="balance balance_name">余额</view>
+    </view>
+    <view class='my_balance'>
+      <view class="balance balance_num">0</view>
+      <view class="balance balance_name">积分</view>
+    </view>
+    <view class='my_balance'>
+      <view class="balance balance_num">0</view>
+      <view class="balance balance_name">卡</view>
+    </view>
+    <view class='my_balance'>
+      <view class="balance balance_num">0</view>
+      <view class="balance balance_name">券</view>
+    </view>
+  </view>
+  <view class='my_order'>
+    <view class='my_order_type'>
+      <!-- 我的订单 -->
+      <view class='my_order_type_title'>
+        <view >我的订单</view>
+        <view class='type_title_right'>
+          <view>查看全部订单</view>
+          <view class='right_one'>
+            <image src='../../images/right.png'></image>
+          </view>
+        </view>
+      </view>
+      <!-- 订单种类 -->
+      <view class='order_list'>
+        <view class='order_type' wx:for='{{order_type_list}}' wx:key>
+          <view class="type_con type_img">
+            <image src='{{item.type_img}}' mode="aspectFit"> </image>
+          </view>
+          <view class="type_con type_name">{{item.type_name}}</view>
+        </view>
+      </view>
+
+
+
+    </view>
+  </view>
+  <!-- 其他列表 -->
+  <view class='my_person_other'>
+    <view class='my_person_other_list' wx:for='{{person_other_list}}' wx:key>
+      <view class='other_list_left'>
+        <!-- <view class='other_list_left_img'>
+          <image src='{{item.other_img}}' mode="aspectFit"></image>
+        </view> -->
+         <view class="iconfont {{item.iconfont}}" style='color:#222222;font-size:16px;margin-right:10rpx;'></view>
+         <view>{{item.other_name}}</view>
+      </view>
+      <view class='other_list_right'>
+      <image src='../../images/right.png'></image>
+      </view>
+    </view>
+  </view>
+  <!-- 账号设置 -->
+  <view class='person_zh'>
+  <view class='person_zh_con'>
+<view class='person_zh_con_left'>
+<view class='iconfont icon-zhanghaoshezhi' style='color:#222222;font-size:16px;margin-right:10rpx;'></view>
+  <view style='font-size:28rpx;'>账号设置</view>
+</view>
+  <view class='other_list_right'>
+      <image src='../../images/right.png'></image>
+      </view>
+  </view>
+  </view>
+</view>

@@ -1,0 +1,20 @@
+<view class='video_leave_all'>
+  <textarea class='my_leave_text' placeholder='欢迎发表你的观点，留言将由作者筛选后公开显示'></textarea>
+  <view class='submit_leave'>提交</view>
+  <view class='my_text_title'>
+    <image src='../../images/short_line.png'></image>
+    <text>我的留言</text>
+    <image src='../../images/short_line.png'></image>
+  </view>
+  <view class='leave_content'>
+    <image src='../../images/avatar.png'></image>
+    <view class='leave_content_right'>
+      <view class='leave_content_right_name'>佩奇</view>
+      <view class='leave_content_right_con'>我在留言我在留言我在留言我在留言我在留言我在留言我在留言我在留言我在留言我在留言我在留言</view>
+      <view class='leave_content_right_bottom'>
+        <view style='color:#979797;'>11月06日 14:09</view>
+        <view style='color:#586f98;'>删除</view>
+      </view>
+    </view>
+  </view>
+</view>

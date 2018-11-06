@@ -1,0 +1,187 @@
+<!-- <view class="top">
+  <view class='top-left'>
+    <image src='{{head}}'></image>
+    <text>孪生艺术</text>
+  </view>
+  <view class='top-right'>
+    <image src='{{search}}'></image>
+    <text>关注</text>
+    <text>|</text>
+    <text>我的记录</text>
+  </view>
+</view> -->
+
+<!-- ------------------ -->
+<swiper class='banner'>
+  <block wx:for="{{imgUrls}}" wx:key>
+    <swiper-item>
+      <image src="{{item}}" mode='widthFix'></image>
+    </swiper-item>
+  </block>
+</swiper>
+
+<!-- ------------------ -->
+<view style='background:#fff;'>
+<view class='book-title'>【助力联考 全场5折】 《造型的高度—素描》</view>
+<view class='book-script'>一本影响你美院之路的素描书</view>
+<view class='book-price'>
+  <view class='book-price-left'>
+    <view>￥64.00</view>
+    <view>120.00</view>
+  </view>
+  <view class='book-price-right'>
+    <image src="{{redheart}}"></image>
+    <text>喜欢</text>
+  </view>
+</view>
+
+<view class='book-message'>
+  <view>运费：免运费</view>
+  <view>剩余：858</view>
+  <view>销量：142</view>
+</view>
+</view>
+<!-- ------------------ -->
+<!-- <view class='guarantee' >
+  <image src='{{wall}}'></image>
+  <text>薇明担保  全程护航  请放心购买</text>
+</view> -->
+
+<!-- -------------------------- -->
+<view class='introduce'>
+  <view class='introduce-top'>
+    <image src='{{head}}'></image>
+    <text>孪生艺术</text>
+    <text>官方</text>
+    <image src='{{right}}'></image>
+  </view>
+
+  <view class='introduce-bottom'>
+    <view class='introduce-bottom-top'>
+      线下门店
+      <image src='{{right}}'></image>
+    </view>
+    <view class='introduce-bottom-bottom'>
+      <view>
+        <image src='{{corner}}'></image>
+        <text>管字店认证</text>
+      </view>
+      <view>
+        <image src='{{corner}}'></image>
+        <text>担保交易</text>
+      </view>
+      <view>
+        <image src='{{corner}}'></image>
+        <text>线下门店</text>
+      </view>
+    </view>
+  </view>
+</view>
+
+<!-- ---------------- -->
+<view class='product-assess'>
+  <view>
+    <text class="{{_num == 1?'current':''}}" data-num="1" bindtap="clickNum"> 商品详情</text>
+  </view>
+  <view>
+    <text class="{{_num == 2?'current':''}}" data-num="2" bindtap="clickNum">销量和评价
+  </text>
+  </view>
+</view>
+
+<!-- 商品详情 -->
+<view class="shop_details_text {{_num == 2?'change':''}}">
+ <view style='width:100%;'>【助力联考 全场5折】 《超越联考色彩》【助力联考 全场5折】 《超越联考色彩》</view>
+ <view class='price_explain'>
+ <view class='explain_line'></view>
+ <view class='explain_text'>价格说明</view>
+ <view class='explain_line'></view>
+ </view>
+ 
+</view>
+<!-- 销量和评价 -->
+<view class="{{_num == 1?'change':''}} assess-right">
+  <view class='assess-right-all'>
+    <view class="{{_praise==1?'praise':''}}" data-praise="1" catchtap="clickPraise">全部</view>
+    <view class="{{_praise==2?'praise':''}}" data-praise="2" catchtap="clickPraise">好评（0）</view>
+    <view class="{{_praise==3?'praise':''}}" data-praise="3" catchtap="clickPraise">中评（0）</view>
+    <view class="{{_praise==4?'praise':''}}" data-praise="4" catchtap="clickPraise">差评（0）</view>
+  </view>
+
+  <view class="{{_praise==1?'show':''}} praise-range" data-praise="1">
+    <view class='praise-range-content'>
+      <view class='pingjia'>
+        <view class='pj-head'>
+          <view class='pj-head-left'>
+            <image class='pj-header' src='{{head}}'></image>
+          </view>
+          <view class='pj-head-right'>
+            <view style='height:48rpx;'>
+              <image class='star' src='{{star}}'></image>
+              <image class='star' src='{{star}}'></image>
+              <image class='star' src='{{star}}'></image>
+            </view>
+            <view style='font-size:24rpx;'>2018-10-05 19:39:50</view>
+          </view>
+        </view>
+        <view class='pj-bottom'>
+          <view style='line-height:50rpx; color:#383838;'>为什么价格这么贵</view>
+          <view>
+            <view>购买自：本店</view>
+            <view>
+              <image class='dianzan' src='{{dianzan}}'></image>
+              <text style='margin-left:10rpx;font-size:28rpx;'>1</text>
+            </view>
+          </view>
+        </view>
+
+      </view>
+
+
+    </view>
+  </view>
+  <view class="{{_praise==2?'show':''}} praise-range" data-praise="2">
+    <view>暂无好论</view>
+  </view>
+  <view class="{{_praise==3?'show':''}} praise-range" data-praise="3">
+    <view>暂无中论</view>
+  </view>
+  <view class="{{_praise==4?'show':''}} praise-range" data-praise="4">
+    <view>暂无差论</view>
+  </view>
+
+</view>
+
+<view class='more'>更多精选商品</view>
+<view class='moreproduct'>
+  <block wx:for="{{productlist}}" wx:key>
+    <view class='moreproduct-range'>
+      <view>
+        <image src='{{item.url}}' mode='widthFix'></image>
+      </view>
+      <view>{{item.title}}</view>
+      <view>{{item.praise}}</view>
+    </view>
+  </block>
+</view>
+
+<!-- 底部栏 -->
+
+<view class='all_content_bottom'>
+<view class="bo_left chat">
+<image class='bo_left_image' src='../../images/chat_red.png' mode='widthFix'></image>
+<text class='bo_left_text'>客服</text>
+</view>
+<view class="bo_left chat">
+<image class='bo_left_image' src='../../images/shop_gouwu.png' mode='widthFix'style='margin-bottom:6rpx;'></image>
+<text class='bo_left_text'>购物车</text>
+</view>
+<view class="bo_left chat">
+<image class='bo_left_image' src='../../images/shop_send.png' mode='widthFix'style='margin-top:12rpx; margin-bottom:10rpx;'></image>
+<text class='bo_left_text'>送人</text>
+</view>
+<view class="bo_right bo_gouwu">加入购物车</view>
+<view class="bo_right bo_buy">立即购买</view>
+</view>
+
+

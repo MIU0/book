@@ -1,0 +1,58 @@
+{
+  "pages": [
+    
+    "pages/order_list/order_list",
+    "pages/home/home",
+    
+    "pages/shop_details/shop_details",
+    "pages/person_center/person_center",
+    "pages/shop_cart/shop_cart",
+    "pages/drawbook/drawbook",
+    "pages/video_list/video_list",
+    "pages/video_details/video_details",
+    "pages/order_details/order_details",
+    "pages/video_leave/video_leave",
+    "pages/store_list/store_list"
+
+    
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#f2f2f2",
+    "navigationBarTitleText": "薇明",
+    "navigationBarTextStyle": "black",
+    "enablePullDownRefresh": false
+    
+  },
+  "tabBar": {
+    "color": "#707070",
+    "selectedColor": "#33b93d",
+    "borderStyle": "white",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "selectedIconPath": "images/store/on_home.png",
+        "iconPath": "images/store/home.png",
+        "pagePath": "pages/home/home",
+        "text": "首页"
+      },{
+        "selectedIconPath": "images/store/on_store.png",
+        "iconPath": "images/store/store.png",
+        "pagePath": "pages/store_list/store_list",
+        "text": "全部商品"
+      },
+      {
+        "selectedIconPath": "images/store/gouwu_onbar.png",
+        "iconPath": "images/store/gouwu_bar.png",
+        "pagePath": "pages/shop_cart/shop_cart",
+        "text": "购物车"
+      },
+      {
+        "selectedIconPath": "images/store/on_mine.png",
+        "iconPath": "images/store/mine.png",
+        "pagePath": "pages/person_center/person_center",
+        "text": "我的"
+      }
+    ]
+  }
+}

@@ -1,0 +1,17 @@
+<view class='all_store'>
+  <view class='all_store_list' wx:for='{{all_store}}' wx:key>
+    <view class='store_list_left'>
+      <image src='{{item.store_img}}'></image>
+    </view>
+    <view class='store_list_right'>
+      <view class='store_name'>{{item.store_name}}</view>
+      <view class='store_bottom'>
+        <view class='store_bottom_price'>￥{{item.store_price}}</view>
+        <view class='store_bottom_img'>
+          <image src='../../images/gouwu.png'></image>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<view class='no_more'>没有更多了</view>

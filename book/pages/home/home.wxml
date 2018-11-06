@@ -1,0 +1,81 @@
+<view>
+  <!-- 公告栏 -->
+  <view class='top_roll'>
+    <view class='top_roll_left'>
+      <image src='../../images/radio.png' mode="aspectFill"></image>
+    </view>
+    <view class='top_roll_right'>
+      <view class="marquee_box">
+        <view class="marquee_text" style="{{orientation}}:{{marqueeDistance}}px;font-size: {{size}}px;">
+          {{text}}
+        </view>
+      </view>
+    </view>
+  </view>
+  <!-- 轮播图 -->
+  <swiper class="swiper_view" autoplay="{{autoplay}}" indicator-dots="{{indicatorDots}}" indicator-color="#989c9f" indicator-active-color='#ffffff' interval="{{myinterval}}" duration="{{duration}}" circular="true">
+    <block wx:for='{{imgsUrl}}' wx:key>
+      <swiper-item>
+        <image src="{{item}}" mode="aspectFill" data-adver_url="{{item.adver_url}}" bindtap='transition' class="slide-image" />
+      </swiper-item>
+    </block>
+  </swiper>
+  <!-- 首页商品分类 -->
+  <view class='store_digest'>
+    <view class='store_digest_info' wx:for='{{store_digest}}' wx:key>
+      <view class='store_digest_info_img' data-url="{{item.url}}" bindtap='store_type' >
+        <image src='{{item.img}}' mode="aspectFit"></image>
+      </view>
+      <view class='store_digest_info_name'>{{item.name}}</view>
+    </view>
+  </view>
+  <!--商品列表 -->
+  <view class='store_list'>
+    <view class='store_list_content' wx:for='{{store_list}}' wx:key>
+      <view class='store_list_content_img' data-index='{{index}}' bindtap='shop_details' >
+        <image src='{{item.store_img}}' mode="aspectFill"></image>
+      </view>
+      <view class='store_list_content_name'>{{item.name}}</view>
+      <view class='store_list_content_bottom'>
+        <view class='content_bottom_price'>￥{{item.price}}</view>
+        <view class='content_bottom_img'>
+          <image src='../../images/gouwu.png'></image>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class='store_video'>
+    <view class='store_video_left'>教学视频</view>
+    <view class='store_video_right' bindtap='all_video'>
+      <view class="right_titile">全部</view>
+      <view class="right_img">
+        <image src='../../images/right.png'></image>
+      </view>
+    </view>
+  </view>
+  <!-- 视频列表 -->
+  <view class='video_list_all'>
+    <view class='video_list' wx:for='{{video_list}}' wx:key >
+      <view class='video_list_left' bindtap='video_details'>
+        <image src='{{item.video_img}}' mode='widthFix'></image>
+        <view class='video_log'>
+        <image  src='../../images/vedio.png' mode='aspectFit'></image>
+        </view>
+      </view>
+      <view class='video_list_right'>
+        <view class='right_one'>
+          {{item.video_name}}
+        </view>
+        <view class='right_two'>{{item.video_details}}</view>
+        <view class='video_right_bottom'>
+          <view class='video_right_bottom_one'>
+            <view class='bottom_one_time' style=''>{{item.video_time}}</view>
+            <view class='bottom_one_num'>{{item.video_num}}人已看</view>
+          </view>
+          <view class='video_right_bottom_two'>￥{{item.video_price}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class='company_remark'>由薇明科技提供技术支持</view>
+</view>

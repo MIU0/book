@@ -1,0 +1,16 @@
+ <view class='store_list'>
+    <view class='store_list_content' wx:for='{{store_list}}' wx:key>
+      <view class='store_list_content_img' data-index='{{index}}' >
+        <image src='{{item.store_img}}' mode="aspectFill"></image>
+      </view>
+      <view class='store_list_content_name'>{{item.name}}</view>
+      <view class='store_list_content_bottom'>
+        <view class='content_bottom_price'>￥{{item.price}}</view>
+        <view class='content_bottom_img'>
+          <image src='../../images/gouwu.png'></image>
+        </view>
+      </view>
+    </view>
+
+    <view class='company_remark'>由薇明科技提供技术支持</view>
+  </view>

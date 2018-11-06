@@ -1,0 +1,63 @@
+<!--pages/shop_cart/shop_cart.wxml-->
+<view class='all_shop_cart'>
+  <view class='shop_cart_title'>
+    <view class='shop_cart_title_ku' style=''>
+      <view class='shop_cart_title-left'>
+        <icon wx:if="{{selectAllStatus}}" type="success" size="21" color="red" bindtap="selectAll" />
+        <icon wx:else type="circle" color='#a9a9a9' size="21" bindtap="selectAll" />
+        <image class='title_left_img' src='../../images/gw_page.png'></image>
+        <text>薇明科技</text>
+      </view>
+      <view class='shop_cart_title-right' bindtap='clickMe' value='{{item.count}}'>
+        {{hiddenName?'编辑':'完成'}}
+      </view>
+    </view>
+  </view>
+  <view class='shop_cart_list' wx:for='{{shop_cart_list}}' wx:key>
+    <!-- <view class='border_ku'> -->
+    <view class='shop_cart_list_content'>
+      <icon wx:if="{{item.selected}}" type="success" size="21" color="red" bindtap="selectList" data-index="{{index}}" />
+      <icon wx:else type="circle" color='#a9a9a9' size="21" bindtap="selectList" data-index="{{index}}" />
+      <view class='shop_cart_list_content_img'>
+        <image src='{{item.shop_cart_img}}'></image>
+      </view>
+      <view class='shop_cart_list_content_right' hidden="{{hiddenDe}}">
+        <view class='shop_cart_list_content_right_name'>{{item.name}}</view>
+        <view class='shop_cart_list_content_right_bottom'>
+          <view class='shop_cart_list_price'>￥{{item.price}}</view>
+          <view class='shop_cart_list_num'>×{{item.num}}</view>
+        </view>
+      </view>
+      <view class='shop_cart_list_content_righta' hidden="{{hiddenName}}">
+        <view class='content_righta_one'>
+          <view class='one_top'>
+            <view class="subtract {{item.count == 1 ? 'disabled': ''}}" data-index='{{index}}' catchtap='subtracttap'>-</view>
+            <input class='count' type='number' value='{{item.count}}' disabled='false'></input>
+            <view class='add' data-index="{{index}}" catchtap='addtap'>+</view>
+          </view>
+          <view class='one_bottom'>
+            ￥{{item.price}}
+          </view>
+        </view>
+        <view class='content_righta_two'>
+          删除
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<view class='company_remark'>由薇明科技提供技术支持</view>
+<view class='cart_bottom'>
+  <view class='cart_bottom_left'>
+    <icon wx:if="{{selectAllStatus}}" type="success" size="21" color="red" bindtap="selectAll" />
+    <icon wx:else type="circle" color='#a9a9a9' size="21" bindtap="selectAll" />
+    <text>全选</text>
+  </view>
+  <view class='cart_bottom_right'>
+    <view class="cart_bottom_right_price ">
+      <text class="price {{cart_bottom == 1 ? 'selectprice': ''}}">合计:￥{{totalPrice}}</text>
+      <text>不含运费</text>
+    </view>
+    <view class="cart_bottom_right_btn {{cart_bottom == 1 ? 'selectnum': ''}}">结算({{totalNum}})</view>
+  </view>
+</view>
