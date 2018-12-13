@@ -1,3 +1,5 @@
+var util = require('../../utils/util.js');
+
 Page({
 
   /**
@@ -6,24 +8,42 @@ Page({
   data: {
     playIndex: null,//用于记录当前播放的视频的索引值
     courseList: [{
-      videoUrl: 'http://store.vimi66.com:8010/shop/upload/act_img//20181101204433873223.mp4',//视频路径
-      coverUrl: 'http://wmdx.vimi66.com:8010/img-video/upload/img//20181105162846033073.jpg', //视频封面图
       duration: '你好年后', //视频时长
     }],
     cover_close: true, //弹出层
+    discover:'0',
+    // hidden:true
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+    this.setData({
+      translate_id: options.url,
+     
+    })
+    wx.showLoading({
+      title: '加载中...',
+    })
   },
   /**跳转留言页面 */
-  leave_text:function(){
-wx.navigateTo({
-  url: '../video_leave/video_leave',
-})
+  leave_text:function(e){
+    var aa = e.currentTarget.dataset.id;
+    // console.log(aa,65656565)
+    var reserved1 = e.currentTarget.dataset.reserved1;
+    console.log(reserved1, 65656565)
+    if (reserved1==0){
+      wx.showModal({
+        title: '提示',
+        content: '购买后才能写留言哟~',
+      })
+    }else{
+      wx.navigateTo({
+        url: '../video_leave/video_leave?url=' + aa,
+      })
+    }
+
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -36,7 +56,38 @@ wx.navigateTo({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    
+    //var that=this;
+    var that = this;
+    var c_user_id = (wx.getStorageSync('c_user_id'));
+    that.setData({
+      c_user_id: c_user_id
+    });
+    wx.request({
+      url: `${getApp().globalData.baseUrl}/wechat/commerce/getTranslateDetail`,
+      data: {
+        translate_id: that.data.translate_id,
+        c_user_id: c_user_id
+      },
+      header: {
+
+      },
+      success: function (res) {
+        wx.hideLoading()
+        var new_courseList = res.data.data;
+        console.log(new_courseList, 999999);
+        new_courseList.create_time = util.formatTime(new Date(new_courseList.create_time));
+        var discover = new_courseList.reserved1
+        if (discover == 1) {
+          that.setData({
+            cover_close: false
+          })
+        }
+        that.setData({
+          courseList: new_courseList,
+          discover: discover
+        })
+      }
+    })
   },
 /**遮罩层 */
   preventTouchMove: function () {
@@ -47,6 +98,7 @@ wx.navigateTo({
 
   videoPlay: function (e) {
     var curIdx = e.currentTarget.dataset.index;
+    console.log(curIdx,8888)
     // 没有播放时播放视频
     if (!this.data.playIndex) {
       this.setData({
@@ -65,6 +117,14 @@ wx.navigateTo({
       var videoContextCurrent = wx.createVideoContext('video' + curIdx)
       videoContextCurrent.play()
     }
+  },
+  /**购买视频跳转 */
+  video_pay:function(e){
+    var aa=e.currentTarget.dataset.id;
+    console.log(aa,777)
+    wx.navigateTo({
+      url: '../video_pay/video_pay?url='+aa,
+    })
   },
   /**
    * 生命周期函数--监听页面隐藏

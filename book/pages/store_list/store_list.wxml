@@ -1,17 +1,81 @@
+<scroll-view scroll-y="true" style="height:100vh;" bindscrolltolower="loadingMore">
 <view class='all_store'>
-  <view class='all_store_list' wx:for='{{all_store}}' wx:key>
-    <view class='store_list_left'>
-      <image src='{{item.store_img}}'></image>
+  <view class='all_store_list' wx:for='{{all_store}}' wx:key  data-id='{{item.commerce_id}}'>
+    <view class='store_list_left' bindtap='store_details' data-id='{{item.commerce_id}}'>
+      <image src='{{item.img_src}}' mode='aspectFill'></image>
     </view>
     <view class='store_list_right'>
-      <view class='store_name'>{{item.store_name}}</view>
+      <view class='store_name'>{{item.commerce_name}}</view>
       <view class='store_bottom'>
-        <view class='store_bottom_price'>￥{{item.store_price}}</view>
-        <view class='store_bottom_img'>
+        <view class='store_bottom_price'>￥{{item.price}}</view>
+        <view class='store_bottom_img' bindtap='gouwu_pop' data-id='{{item.commerce_id}}'>
           <image src='../../images/gouwu.png'></image>
         </view>
       </view>
     </view>
   </view>
 </view>
-<view class='no_more'>没有更多了</view>
+<view class='no_more' wx:if="{{inforHasMore== '0'}}">--没有更多了--</view>
+</scroll-view>
+<!-- 点击购物车弹出层 -->
+<view class='store_pop' catchtouchmove="preventTouchMove" catchtap='closepop' wx:if='{{store_pop}}'></view>
+<view class='store_pop_body' wx:if='{{store_pop}}' animation="{{animationData}}">
+  <view class='store_pop_top'>
+    <view class='store_pop_img'>
+      <image src='{{store_pop.img_src}}' mode='widthFix'></image>
+    </view>
+    <view class='store_pop_con'>
+      <view class='store_pop_con_name'>{{store_pop.commerce_name}}</view>
+      <text class='store_pop_con_price'>￥{{store_pop.price}}</text>
+    </view>
+    <view class='store_pop_close' bindtap='close_gouwu'>
+      <image src='../../images/close_a.png'></image>
+    </view>
+  </view>
+  <view class='store_pop_num'>
+    <view class='store_pop_num_left'>
+      <view>购买数量:</view>
+      <view>剩余{{store_pop.stock}}件</view>
+    </view>
+    <view class='store_pop_num_right'>
+      <view class='one_top'>
+        <view class="subtract {{count == 1 ? 'disabled': ''}}" data-index='{{index}}' catchtap='subtracttap'>-</view>
+        <input class='count' type='number' value='{{count}}' disabled='false'></input>
+        <view class='add' data-index="{{index}}" catchtap='addtap'>+</view>
+      </view>
+    </view>
+  </view>
+</view>
+<view class='store_pop_bottom' wx:if='{{store_pop}}' animation="{{animationData}}">
+  <view bindtap='my_add' data-id='{{store_pop.commerce_id}}' data-count='{{count}}'>加入购物车</view>
+  <view bindtap='buy_now' data-id='{{store_pop.commerce_id}}' data-count='{{count}}' >立即购买</view>
+</view>
+<!-- 成为分销员后赚 -->
+
+<view class='zhuan' bindtap='zhuan' wx:if='{{zhuan==1}}'>赚</view>
+
+<!-- 弹出层 -->
+<view class='zhuan_info' catchtouchmove="preventTouchMove" catchtap='close_zhuan' wx:if='{{zhuan_info}}'></view>
+<view class='zhuan_info_body' wx:if='{{zhuan_info}}'>
+  <view class='zhuan_info_body_top'>立即分享给好友</view>
+  <view class='zhuan_info_body_hint'>朋友通过你分享的页面成功购买后,你可获得相对应的佣金。佣金可在"我的-分销员中心"中查看</view>
+  <view class='zhuan_info_con'>
+    <view class='zhuan_info_con_left'>
+    <button open-type='share'>
+    <image class='zhuan_img' src='../../images/zhuan_weixin.png'></image>
+    </button>   
+      <view>微信</view>
+    </view>
+    <view class='zhuan_info_con_left' bindtap='my_code'>
+      <image class='zhuan_img' src='../../images/zhuan_ma.png'></image>
+      <view>二维码</view>
+    </view>
+  </view>
+  <view class='zhuan_btn' bindtap='fenxiao'>我的分销员中心</view>
+</view>
+<!-- 二维码弹出层 -->
+<view class='code_info' catchtouchmove="preventTouchMove" catchtap='close_code' wx:if='{{code_info}}'></view>
+<view class='code_info_body' wx:if='{{code_info}}'>
+<image src='{{my_path.path}}' bindtouchstart='timestart' bindtouchend='timeend' bindtap='saveImg'></image>
+</view>
+<view class='code_info_hint' wx:if='{{code_info}}'>长按图片保存至相册</view>

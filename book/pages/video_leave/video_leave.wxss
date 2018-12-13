@@ -1,6 +1,34 @@
 page{
   background: #f8f8f8;
 }
+/* 文本输入框 */
+.areas{
+  width: 100%;
+  height:250rpx;
+  font-size: 28rpx;
+  text-indent: 28rpx;
+  padding-top: 10rpx;
+  padding-bottom: 30rpx;
+  margin: 0 auto;
+  overflow: hidden;   
+  position: relative; 
+}
+.currentWordNumber{
+  font-size: 28rpx;
+  color: gray;
+  position: absolute;
+  right:40px;
+  top: 144px;
+  /* border: 1px solid red; */
+}
+.hint{
+   font-size: 28rpx;
+   position: absolute;
+   top: 120rpx;
+   left: 30rpx;
+   color: #FF6600;
+}
+
 
 .video_leave_all{
   width: 92%;
@@ -53,22 +81,23 @@ color: #404040;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
+  margin-bottom: 20rpx;
 }
 .leave_content image{
-  width: 100rpx;
-  height: 100rpx;
+  width: 80rpx;
+  height: 80rpx;
   border-radius: 10rpx;
   margin-right: 16rpx;
 }
 .leave_content_right{
   width:571rpx;
   height: 100%;
-  /* background: yellow; */
+/* border: 1px solid red; */
   font-size: 28rpx;
 }
 .leave_content_right_name{
   width: 100%;
-  height: 41rpx;
+  /* border: 1px solid red; */
   color: #979797;
 }
 .leave_content_right_con{

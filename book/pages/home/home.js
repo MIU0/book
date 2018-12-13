@@ -1,127 +1,64 @@
+var util = require('../../utils/util.js');
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    text: '欢迎浏览小程序，商品陆续上架中，敬请期待......',
-    marqueePace: 1, //滚动速度
-    marqueeDistance: 0, //初始滚动距离
-    marqueeDistance2: 0,
-    size: 14,
-    orientation: 'left', //滚动方向
-    interval: 15, // 时间间隔
+    rollUrls: [
+      '营业时间：9：00 - 22：00',
+      '服务电话：400-8998-8898',
+      '配送条件：1元起送  配送费6元'
+    ],
+    roll_indicatorDots: false,
+    roll_interval: 3000,
     indicatorDots: true,
     autoplay: true,
     myinterval: 3000,
     duration: 1000,
-    imgsUrl: [ //轮播
-      'http://wmdx.vimi66.com:8010/img-video/upload/img//20181105162846023648.jpg',
-      'http://wmdx.vimi66.com:8010/img-video/upload/img//20181105162846013044.jpg',
-      'http://wmdx.vimi66.com:8010/img-video/upload/img//20181105162846011313.jpg'
-    ],
-    store_digest: [{
-        img: '../../images/one.png',
-        name: '教学视频',
-      url:'../video_list/video_list'
-      },
-      {
-        img: '../../images/two.png',
-        name: '绘画教材',
-        url: '../drawbook/drawbook'
-      },
-      {
-        img: '../../images/three.png',
-        name: '衍生品'
-      },
-      {
-        img: '../../images/four.png',
-        name: '绘画作品'
-      },
-      {
-        img: '../../images/five.png',
-        name: '艺术品'
-      },
-      {
-        img: '../../images/six.png',
-        name: '美术画材'
-      },
-      {
-        img: '../../images/seven.png',
-        name: '超值套餐'
-      },
-      {
-        img: '../../images/eight.png',
-        name: '线上1V1'
-      }
-    ],
-    store_list: [{
-      store_img: 'http://wmdx.vimi66.com:8010/img-video/upload/img//20181105162846023648.jpg',
-        name: '【助力联考 全场五折】 《造型的高度-素描》',
-        price: '64.00'
-      },
-      {
-        store_img: 'http://wmdx.vimi66.com:8010/img-video/upload/img//20181105162846013044.jpg',
-        name: '【助力联考 全场五折】 《超越联考色彩》',
-        price: '59.00'
-      },
-      {
-        store_img: 'http://wmdx.vimi66.com:8010/img-video/upload/img//20181105162846011313.jpg',
-        name: '【助力联考 全场五折】 《精彩色调》',
-        price: '48.00'
-      },
-    ],
-    video_list: [{
-      video_img: 'http://wmdx.vimi66.com:8010/img-video/upload/img//20181105162846033073.jpg',
-        video_name: '女青年色彩头像示范',
-        video_details: '黄埔艺术研究院导师教你画画',
-        video_time: '07-13',
-        video_num: '20',
-        video_price: '0.50'
-      },
-      {
-        video_img: 'http://wmdx.vimi66.com:8010/img-video/upload/img//20181105162846365409.png',
-        video_name: '讲解素描直观造型',
-        video_details: '黄埔艺术研究院导师教你画画',
-        video_time: '07-13',
-        video_num: '20',
-        video_price: '0.50'
-      },
-      {
-        video_img: 'http://wmdx.vimi66.com:8010/img-video/upload/img//20181105162846103897.jpg',
-        video_name: '女青年3/4素描头像写生示范',
-        video_details: '黄埔艺术研究院导师教你画画',
-        video_time: '07-13',
-        video_num: '20',
-        video_price: '0.50'
-      }
-
-    ]
+    imgsUrl: [], //轮播
+    count: 1,
+    store_digest: [],
+    store_list: [],
+    video_list: [],
+    store_pop: false,
+    person_info: false,
+    no_refuse:false,
+    refuse:true,
+    zhuan_info: false,
+    code_info: false,
+    zhuan: 0
   },
-/**跳转商品详情 */
-  shop_details:function(e){
-wx.navigateTo({
-  url: '../shop_details/shop_details',
-})
-  },
-  /**类型跳转 */
-  store_type: function(e) {
-    var url = e.currentTarget.dataset.url;
-    wx.navigateTo({
-      url: url
-    })
-  },
-  /**视频列表 */
-  all_video:function(){
-    wx.navigateTo({
-      url: '../video_list/video_list',
-    })
-  },
+  
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-
+    if (options.my_distributor_id) {
+      getApp().globalData.distributor_id = options.my_distributor_id
+    }
+    //console.log(options.my_distributor_id,6666666)
+    if (options.scene) {
+      let scene = decodeURIComponent(options.scene);
+      //&是我们定义的参数链接方式
+      let distributor_id = scene.split("&")[0];
+      //console.log(distributor_id, 11111);
+      distributor_id = distributor_id.split("=")[1];
+      wx.request({
+        url: getApp().globalData.baseUrl + '/wechat/qr/readQr',
+        data: {
+          dis_id: distributor_id
+        },
+        header: {},
+        success: function (res) {
+          //console.log(res.data.data, 55555);
+          var distributor = res.data.data;
+          getApp().globalData.distributor_id = distributor.distributor_id
+        }
+      });
+      //`${getApp().globalData.distributor_id}`
+      //其他逻辑处理。。。。。
+    }
   },
 
   /**
@@ -130,45 +67,502 @@ wx.navigateTo({
   onReady: function() {
 
   },
+  onShow_img: function() {
+    var that = this;
+    wx.request({
+      url: `${getApp().globalData.baseUrl}/wechat/commodity/getAdver`,
+      data: {
+
+      },
+      header: {
+
+      },
+      success: function(res) {
+        var imgUrl = res.data.data;
+        // console.log(imgUrl, 999999);
+        that.setData({
+          imgsUrl: imgUrl
+        })
+      }
+
+    })
+  },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    // 页面显示
+
     var that = this;
-    var length = that.data.text.length * that.data.size; //文字长度
-    var windowWidth = wx.getSystemInfoSync().windowWidth; // 屏幕宽度
+    var c_user_id = (wx.getStorageSync('c_user_id'));
     that.setData({
-      length: length,
-      windowWidth: windowWidth,
-    });
-    that.run1(); // 水平一行字滚动完了再按照原来的方向滚动
-  },
-  run1: function() {
-    var that = this;
-    var interval = setInterval(function() {
-      if (-that.data.marqueeDistance < that.data.length) {
+      c_user_id: c_user_id
+    })
+    wx.getUserInfo({
+      withCredentials: true, //此处设为true，才会返回encryptedData等敏感信息
+      success: function (res) {
         that.setData({
-          marqueeDistance: that.data.marqueeDistance - that.data.marqueePace,
-        });
-      } else {
-        clearInterval(interval);
+          userInfo: res.userInfo,
+          person_info: false
+        })
+      },
+      fail: function (res) {
         that.setData({
-          marqueeDistance: that.data.windowWidth
-        });
-        that.run1();
+          person_info: true
+        })
       }
-    }, that.data.interval);
+    })
+    wx.request({
+      url: `${getApp().globalData.baseUrl}/wechat/commerce/getRecommendComm`,
+      data: {},
+      header: {},
+      success: function(res) {
+        var store_list = res.data.data;
+        var my_distributor_id = getApp().globalData.my_distributor_id;
+        console.log(my_distributor_id, 8909);
+        var zhuan = 0
+        if (my_distributor_id) {
+          zhuan = 1
+        }
+        that.setData({
+          store_list: store_list,
+          zhuan: zhuan
+        })
+      }
+    })
+    that.onShow_img();
+    that.show_video();
+    that.show_run();
+    that.show_typeone();
+    that.show_typetwo();
   },
+
+  /**视频列表 */
+  show_video: function() {
+    var that = this;
+    wx.request({
+      url: `${getApp().globalData.baseUrl}/wechat/commerce/getRecommendTranslate`,
+      data: {
+
+      },
+      header: {
+
+      },
+      success: function(res) {
+        var new_video_list = res.data.data;
+         //console.log(new_video_list, 999999);
+        for (var i = 0; i < new_video_list.length; i++) {
+          var video_list = new_video_list[i]["create_time"]
+          new_video_list[i]["create_time"] = util.shortTime(new Date(video_list));
+        }
+        that.setData({
+          video_list: new_video_list
+        })
+      }
+    })
+  },
+  /**加商品 */
+  addtap: function () {
+    var that = this;
+    that.setData({
+      count: ++that.data.count
+    })
+  },
+  subtracttap: function () {
+    var that = this;
+    var count = that.data.count
+    if (count > 1) {
+      count--
+    }
+    that.setData({
+      count: count
+    })
+  },
+  /**跳转商品详情 */
+  shop_details: function (e) {
+    var aa = e.currentTarget.dataset.id
+    wx.navigateTo({
+      url: '../shop_details/shop_details?url=' + aa,
+    })
+  },
+  /**第一行类型跳转 */
+  store_typeone: function (e) {
+    var index = e.currentTarget.dataset.index;
+    var type_id = e.currentTarget.dataset.type_id
+    wx.navigateTo({
+      url: '../drawbook/drawbook?url=' + type_id
+    })
+
+  },
+  /**第二行类型跳转 */
+  store_typetwo: function (e) {
+    var index = e.currentTarget.dataset.index;
+    var id = e.currentTarget.dataset.id
+    var that = this;
+    if (index < 3) {
+      wx.navigateTo({
+        url: '../my_show/my_show?url=' + id
+      })
+    } else {
+      console.log(that.data.phone, 111);
+      wx.makePhoneCall({
+        phoneNumber: that.data.phoneNumber,
+      })
+    }
+
+
+  },
+  /**总类别列表第一行 */
+  show_typeone: function () {
+    var that = this;
+    wx.request({
+      url: `${getApp().globalData.baseUrl}/wechat/commodity/getCommodityType`,
+      data: {},
+      header: {},
+      success: function (res) {
+        var all_type = res.data.data
+
+        console.log(all_type, 888)
+        that.setData({
+          all_type: all_type
+        })
+      }
+    })
+  },
+  /**总类别列表第二行 */
+  show_typetwo: function () {
+    var that = this;
+    wx.request({
+      url: `${getApp().globalData.baseUrl}/wechat/imgtype/getImgList`,
+      data: {},
+      header: {},
+      success: function (res) {
+        var all_type_two = res.data.data.typeList
+        var phone = res.data.data.t_store_info.phone
+
+        console.log(res.data.data, 888)
+        that.setData({
+          all_type_two: all_type_two,
+          phoneNumber: phone
+        })
+      }
+    })
+  },
+  /**视频列表 */
+  all_video: function () {
+    wx.navigateTo({
+      url: '../video_list/video_list',
+    })
+  },
+  /**立即购买 */
+  buy_now: function (e) {
+    var count = e.currentTarget.dataset.count;
+    var id = e.currentTarget.dataset.id
+    //console.log(id, 322)
+    wx.navigateTo({
+      url: '../create_order/create_order?count=' + count + '&id=' + id,
+    })
+  },
+  /**添加购物车 */
+  my_add: function (e) {
+    var that = this;
+    var c_user_id = (wx.getStorageSync('c_user_id'));
+    that.setData({
+      c_user_id: c_user_id
+    })
+
+    var comm_num = e.currentTarget.dataset.count;
+    var commodity_id = e.currentTarget.dataset.id
+    //console.log(commodity_id, 1111)
+    wx.request({
+      url: `${getApp().globalData.baseUrl}/wechat/commerce/addShopToCart`,
+      data: {
+        comm_num: comm_num,
+        c_user_id: c_user_id,
+        commodity_id: commodity_id
+
+      },
+      header: {},
+      success: function (res) {
+        wx.showToast({
+          title: '加入购物车成功',
+        })
+      }
+    })
+
+  },
+  /**弹出层 */
+  gouwu_pop: function (e) {
+    var animation = wx.createAnimation({
+      duration: 200,
+      timingFunction: "linear",
+      delay: 0
+    })
+    this.animation = animation
+    animation.translateY(300).step()
+    setTimeout(function () {
+      animation.translateY(0).step()
+      this.setData({
+        animationData: animation.export()
+      })
+    }.bind(this), 200)
+    this.setData({
+      animationData: animation.export(),
+      store_pop: true
+    })
+    var that = this;
+    var commerce_id = e.currentTarget.dataset.id;
+    wx.request({
+      url: `${getApp().globalData.baseUrl}/wechat/commerce/getCommerceDetail`,
+      data: {
+        commerce_id: commerce_id
+      },
+      header: {},
+      success: function (res) {
+        //console.log(res.data.data, 787878);
+        var store_pop = res.data.data;
+        that.setData({
+          store_pop: store_pop
+        })
+      }
+    })
+  },
+  preventTouchMove: function () {
+
+  },
+  close_gouwu: function () {
+    var animation = wx.createAnimation({
+      duration: 200,
+      timingFunction: "linear",
+      delay: 0
+    })
+    this.animation = animation
+    animation.translateY(300).step()
+    setTimeout(function () {
+      animation.translateY(0).step()
+      this.setData({
+        animationData: animation.export(),
+        store_pop: false
+      })
+    }.bind(this), 200)
+    this.setData({
+      animationData: animation.export(),
+    })
+  },
+  refuse: function () {
+    //console.log(111);
+
+    this.setData({
+      refuse: !this.data.refuse,
+      no_refuse: !this.data.no_refuse
+    })
+  },
+  /**页面公告 */
+
+  show_run: function() {
+    var that = this;
+    wx.request({
+      url: `${getApp().globalData.baseUrl}/wechat/commerce/loadNotice`,
+      data: {},
+      header: {},
+      success: function(res) {
+
+        var rollUrls = res.data.data;
+       console.log(rollUrls,888899)
+        var top_roll_show = 1;
+        if (rollUrls && rollUrls.length>0) {
+          top_roll_show = 0
+        }
+        // console.log(top_roll,6666)
+        that.setData({
+          rollUrls: rollUrls,
+          top_roll_show: top_roll_show
+        })
+      }
+    })
+
+  },
+
+  getUserInfo: function () {
+    var that = this;
+    var c_user_id = (wx.getStorageSync('c_user_id'));
+    that.setData({
+      c_user_id: c_user_id
+    })
+    wx.getUserInfo({
+      withCredentials: true, //此处设为true，才会返回encryptedData等敏感信息
+      success: function (res) {
+        //console.log(res.userInfo, 999999)
+        var sex = 'F'
+        if (res.userInfo.gender == 0) {
+          sex = "M"
+        } else {
+          sex = "F"
+        }
+        wx.request({
+          url: `${getApp().globalData.baseUrl}/wechat/user/updateUser`,
+          data: {
+            c_user_id: c_user_id,
+            user_name: res.userInfo.nickName,
+            sex: sex,
+            avatar: res.userInfo.avatarUrl
+          },
+          header: {
+            'content-type': 'application/json'  // 默认值
+          },
+          success: function (res) {
+              //console.log(res.data,89989);
+          }
+
+        })
+        that.setData({
+          userInfo: res.userInfo,
+          my_person: 0,
+          person_info:false
+        })
+      },
+      fail: function (res) {
+        that.setData({
+          my_person: 1
+        })
+      }
+    })
+  },
+
 
   /**视频详情 */
-  video_details:function(e){
-wx.navigateTo({
-  url: '../video_details/video_details',
-})
+  video_details: function(e) {
+    var aa = e.currentTarget.dataset.id
+    //  console.log(aa, 55555)
+    wx.navigateTo({
+      url: '../video_details/video_details?url=' + aa,
+    })
+  },
+  /**我的分销员中心 */
+  fenxiao: function (e) {
+    wx.navigateTo({
+      url: '../fenxiao/fenxiao',
+    })
+  },
+  zhuan: function () {
+    var animation = wx.createAnimation({
+      duration: 200,
+      timingFunction: "linear",
+      delay: 0
+    })
+    this.animation = animation
+    animation.translateY(300).step()
+    setTimeout(function () {
+      animation.translateY(0).step()
+      this.setData({
+        animationData: animation.export()
+      })
+    }.bind(this), 200)
+    this.setData({
+      animationData: animation.export(),
+      zhuan_info: true
+    })
+  },
+  close_zhuan: function () {
+    var animation = wx.createAnimation({
+      duration: 200,
+      timingFunction: "linear",
+      delay: 0
+    })
+    this.animation = animation
+    animation.translateY(300).step()
+    setTimeout(function () {
+      animation.translateY(0).step()
+      this.setData({
+        animationData: animation.export(),
+        zhuan_info: false
+      })
+    }.bind(this), 200)
+    this.setData({
+      animationData: animation.export(),
+    })
+  },
+  my_code: function () {
+    this.setData({
+      zhuan_info: false,
+      code_info: true
+    })
+    var that = this;
+    //var distributor_id = that.data.id
+    var scene = decodeURIComponent("dis_id=" + getApp().globalData.my_distributor_id);
+
+    //console.log(scene, 976);
+    wx.request({
+      url: `${getApp().globalData.baseUrl}/wechat/qr/getEwm`,
+      header: {
+        'content-type': 'application/json'
+      },
+      data: {
+        commer_id: 0,
+        page: 'pages/home/home',
+        distributor_id: getApp().globalData.my_distributor_id
+      },
+      success: function (res) {
+        wx.hideLoading();
+        var path = res.data.data;
+        //console.log(res.data.data, 99999)
+        that.setData({
+          my_path: path
+        })
+      }
+    })
+  },
+  close_code: function () {
+    this.setData({
+      code_info: false
+    })
   },
 
+  //点击开始的时间  
+  timestart: function (e) {
+    var _this = this;
+    _this.setData({ timestart: e.timeStamp });
+  },
+  //点击结束的时间
+  timeend: function (e) {
+    var _this = this;
+    _this.setData({ timeend: e.timeStamp });
+  },
+
+  //保存图片
+  saveImg: function (e) {
+    var that = this;
+    var times = that.data.timeend - that.data.timestart;
+    if (times > 300) {
+      //console.log("长按");
+      wx.getSetting({
+        success: function (res) {
+          wx.authorize({
+            scope: 'scope.writePhotosAlbum',
+            success: function (res) {
+              //console.log("授权成功");
+              var imgUrl = that.data.my_path.path;
+              wx.downloadFile({//下载文件资源到本地，客户端直接发起一个 HTTP GET 请求，返回文件的本地临时路径
+                url: imgUrl,
+                success: function (res) {
+                  // 下载成功后再保存到本地
+                  wx.saveImageToPhotosAlbum({
+                    filePath: res.tempFilePath,//返回的临时文件路径，下载后的文件会存储到一个临时文件
+                    success: function (res) {
+                      wx.showToast({
+                        title: '成功保存到相册',
+                        icon: 'success'
+                      })
+                    }
+                  })
+                }
+              })
+            }
+          })
+        }
+      })
+    }
+  },
   /**
    * 生命周期函数--监听页面隐藏
    */
@@ -200,7 +594,24 @@ wx.navigateTo({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function() {
-
+  onShareAppMessage: function (ops) {
+    if (ops.from === 'button') {
+      // 来自页面内转发按钮
+      //console.log(ops.target)
+    }
+    var my_distributor_id = getApp().globalData.my_distributor_id
+    return {
+      title: 'GL好肌友皮肤管理',
+      path: `pages/home/home?my_distributor_id=` + my_distributor_id, //点击分享的图片进到哪一个页面
+      success: function (res) {
+        // 转发成功
+        //console.log("转发成功:" + JSON.stringify(res));
+      },
+      fail: function (res) {
+        // 转发失败
+        //console.log("转发失败:" + JSON.stringify(res));
+      }
+    }
+  
   }
 })

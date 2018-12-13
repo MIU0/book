@@ -1,39 +1,20 @@
+var util = require('../../utils/util.js');
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    video_one_list: [
-      {
-        video_img: 'http://wmdx.vimi66.com:8010/img-video/upload/img//20181105162846033073.jpg',
-        video_name: '女青年色彩头像示范',
-        video_details: '黄埔艺术研究院导师教你画画',
-        video_time: '07-13',
-        video_num: '20',
-        video_price: '0.50'
-      }
-      ,
-      {
-        video_img: 'http://wmdx.vimi66.com:8010/img-video/upload/img//20181105162846365409.png',
-        video_name: '讲解素描直观造型',
-        video_details: '黄埔艺术研究院导师教你画画',
-        video_time: '07-13',
-        video_num: '20',
-        video_price: '0.50'
-      },
-      {
-        video_img: 'http://wmdx.vimi66.com:8010/img-video/upload/img//20181105162846103897.jpg',
-        video_name: '女青年3/4素描头像写生示范',
-        video_details: '黄埔艺术研究院导师教你画画',
-        video_time: '07-13',
-        video_num: '20',
-        video_price: '0.50'
-      }
-
-    ]
+   
   },
-
+/**跳转详情 */
+  video_details:function(e){
+    var aa = e.currentTarget.dataset.id
+    //  console.log(aa, 55555)
+    wx.navigateTo({
+      url: '../video_details/video_details?url=' + aa,
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -52,7 +33,32 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    
+    var that=this;
+    wx.request({
+      url: `${getApp().globalData.baseUrl}/wechat/commerce/getAllTranslateType`,
+      data:{},
+      header:{},
+      success:function(res){
+        console.log(res.data.data,878787);
+        var new_all_type=res.data.data;
+        var translateList2=[];
+        for (var i = 0; i < new_all_type.length;i++){
+          var new_translateList = new_all_type[i].translateList
+          for (var j = 0; j < new_translateList.length; j++) {
+            var translateList = new_translateList[j]["create_time"]
+            new_translateList[j]["create_time"] = util.shortTime(new Date(translateList));
+          }
+          translateList2.push(new_translateList);
+        }
+        
+        console.log(translateList2,9999)
+        
+        that.setData({
+          all_type: new_all_type,
+          translateList: translateList2
+        })
+      }
+    })
   },
 
   /**

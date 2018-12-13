@@ -1,0 +1,19 @@
+<!--pages/my_show/my_show.wxml-->
+<scroll-view scroll-y="true" style="height:100vh;" bindscrolltolower="loadingMore" wx:if='{{shopNull==0}}'>
+<view class='store_list'>
+    <view class='store_list_content' wx:for='{{my_show}}' wx:key>
+      <view class='store_list_content_img' >
+        <image src='{{item.img_url}}' mode="aspectFill" data-src='{{item.img_url}}' bindtap='shop_details' data-id='{{item.id}}'></image>
+      </view>
+      <view class='store_list_content_name'>{{item.name}}</view>
+    </view>
+    <!-- <view class='company_remark'>由武汉薇明科技提供技术支持</view> -->
+  </view>
+  <view class='no_more' wx:if="{{inforHasMore== '0'}}">--没有更多了--</view>
+  <view class='company_remark' wx:if='{{shopNull==0}}'>由武汉薇明科技提供技术支持</view>
+</scroll-view>
+<!-- 无商品时 -->
+<view class='no_order' wx:if='{{shopNull==1}}'>
+  <view class='no_order_top'>还没有商品哟~</view>
+  <view class='company_remark_if'>由武汉薇明科技提供技术支持</view>
+</view>

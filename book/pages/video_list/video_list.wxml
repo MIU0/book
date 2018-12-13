@@ -1,10 +1,10 @@
 <view class='video_all'>
   <!-- 列表一 -->
-  <view class='video_one'>
-    <view class='video_one_title'>色彩视频教学</view>
-    <view class='video_one_list' wx:for='{{video_one_list}}' wx:key>
-      <view class='video_one_list_left'>
-        <image src='{{item.video_img}}' mode='widthFix'></image>
+  <view class='video_one'wx:for='{{all_type}}' wx:key>
+    <view class='video_one_title'>{{item.type_name}}</view>
+    <view class='video_one_list' wx:for='{{item.translateList}}' wx:key>
+      <view class='video_one_list_left' bindtap='video_details' data-id='{{item.translate_id}}'>
+        <image src='{{item.img_url}}' mode='widthFix'></image>
         <view class='video_log'>
         <image  src='../../images/vedio.png'></image>
         </view>
@@ -12,67 +12,18 @@
       </view>
       <view class='video_list_right'>
         <view class='right_one'>
-          {{item.video_name}}
+          {{item.translate_name}}
         </view>
-        <view class='right_two'>{{item.video_details}}</view>
+        <view class='right_two'>{{item.introduction}}</view>
         <view class='video_right_bottom'>
           <view class='video_right_bottom_one'>
-            <view class='bottom_one_time' style=''>{{item.video_time}}</view>
+            <view class='bottom_one_time' style=''>{{item.create_time}}</view>
             <view class='bottom_one_num'>{{item.video_num}}人已看</view>
           </view>
-          <view class='video_right_bottom_two'>￥{{item.video_price}}</view>
+          <view class='video_right_bottom_two'>￥{{item.price}}</view>
         </view>
       </view>
     </view>
   </view>
-  <!-- 列表二 -->
-  <view class='video_one'>
-    <view class='video_one_title'>素描视频教学</view>
-    <view class='video_one_list' wx:for='{{video_one_list}}' wx:key>
-      <view class='video_one_list_left'>
-        <image src='{{item.video_img}}' mode='widthFix'></image>
-        <view class='video_log'>
-        <image  src='../../images/vedio.png'></image>
-        </view>
-      </view>
-      <view class='video_list_right'>
-        <view class='right_one'>
-          {{item.video_name}}
-        </view>
-        <view class='right_two'>{{item.video_details}}</view>
-        <view class='video_right_bottom'>
-          <view class='video_right_bottom_one'>
-            <view class='bottom_one_time' style=''>{{item.video_time}}</view>
-            <view class='bottom_one_num'>{{item.video_num}}人已看</view>
-          </view>
-          <view class='video_right_bottom_two'>￥{{item.video_price}}</view>
-        </view>
-      </view>
-    </view>
-  </view>
-  <!-- 列表三 -->
-  <view class='video_one'>
-    <view class='video_one_title'>速写视频教学</view>
-    <view class='video_one_list' wx:for='{{video_one_list}}' wx:key>
-      <view class='video_one_list_left'>
-        <image src='{{item.video_img}}' mode='widthFix'></image>
-        <view class='video_log'>
-        <image  src='../../images/vedio.png'></image>
-        </view>
-      </view>
-      <view class='video_list_right'>
-        <view class='right_one'>
-          {{item.video_name}}
-        </view>
-        <view class='right_two'>{{item.video_details}}</view>
-        <view class='video_right_bottom'>
-          <view class='video_right_bottom_one'>
-            <view class='bottom_one_time' style=''>{{item.video_time}}</view>
-            <view class='bottom_one_num'>{{item.video_num}}人已看</view>
-          </view>
-          <view class='video_right_bottom_two'>￥{{item.video_price}}</view>
-        </view>
-      </view>
-    </view>
-  </view>
+ 
 </view>
